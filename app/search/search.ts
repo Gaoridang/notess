@@ -1,7 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { formatDate } from "date-fns";
 import OpenAI from "openai";
+import { ko } from "date-fns/locale";
 
 export const search = async (query: string) => {
   const supabase = createClient();
@@ -20,12 +22,13 @@ export const search = async (query: string) => {
   const embedding = embeddingResponse.data[0].embedding;
 
   // Do the search with the embedding
-  const { data, error } = await supabase.rpc("semantic_search", {
-    query_text: query,
+  const { data, error } = await supabase.rpc("get_similar_activities", {
     query_embedding: embedding,
-    match_count: 5,
-    match_date: null,
+    similarity_threshold: 0.0,
+    max_results: 5,
   });
+
+  console.log(data);
 
   if (error) {
     return { error: error.message };
@@ -41,10 +44,14 @@ export const search = async (query: string) => {
           You should response based on the following context and question.
           You should not contain any information outside of the context.
           If there's no information in the context, answer "No information available".
-          Today is 2024-08-29. Reponse in Korean.
+          Today is ${
+          formatDate(new Date(), "yyyy-MM-dd", { locale: ko })
+        }. Reponse in Korean.
 
           Context: ${
-          data.map((d) => `Date: ${d.metadata.date} Content: ${d.description}`)
+          data.map((d: any) =>
+            `Date: ${d.metadata.date} Content: ${d.description}`
+          )
             .join("\n\n")
         }
 
