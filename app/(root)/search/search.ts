@@ -18,23 +18,18 @@ export const search = async (query: string) => {
     input: query,
   });
 
-  // Array of embedding
   const embedding = embeddingResponse.data[0].embedding;
 
-  // Do the search with the embedding
   const { data, error } = await supabase.rpc("get_similar_activities", {
     query_embedding: embedding,
     similarity_threshold: 0.0,
     max_results: 5,
   });
 
-  console.log(data);
-
   if (error) {
-    return { error: error.message };
+    throw new Error(error.message);
   }
 
-  // Generate response with the context of description, metadata
   const chatResponse = openai.chat.completions.create({
     model: "gpt-4o-mini-2024-07-18",
     messages: [

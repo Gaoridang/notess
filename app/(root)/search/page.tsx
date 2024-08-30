@@ -4,20 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { search } from "./search";
-
-interface Message {
-  id: string;
-  type: "user" | "bot";
-  message: string;
-}
+import { MessageType } from "@/types";
+import Message from "./components/Message";
 
 const SearchPage = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [query, setQuery] = useState("");
 
   const handleSendMessage = async () => {
-    // Search with query and get response from the bot
-    // add the response to the messages
+    setQuery("");
+
     setMessages((prev) => [
       ...prev,
       { id: Date.now().toString(), type: "user", message: query },
@@ -25,16 +21,10 @@ const SearchPage = () => {
 
     const response = await search(query);
 
-    if (response.error) {
-      console.error(response.error);
-    }
-
-    if (response.message) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), type: "bot", message: response.message },
-      ]);
-    }
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now().toString(), type: "bot", message: response.message },
+    ]);
   };
 
   return (
@@ -50,12 +40,11 @@ const SearchPage = () => {
 
       <div className="border rounded-lg p-4 mt-4 space-y-2">
         {messages.map((message) => (
-          <div
+          <Message
             key={message.id}
-            className={message.type === "user" ? "text-right" : ""}
-          >
-            {message.message}
-          </div>
+            type={message.type}
+            message={message.message}
+          />
         ))}
       </div>
     </div>
