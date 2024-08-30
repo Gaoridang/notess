@@ -30,7 +30,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-in">Sign in</Link>
+              <Link href="/sign-in">로그인</Link>
             </Button>
             <Button
               asChild
@@ -39,7 +39,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-up">Sign up</Link>
+              <Link href="/sign-up">로그아웃</Link>
             </Button>
           </div>
         </div>
