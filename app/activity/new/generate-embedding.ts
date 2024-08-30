@@ -1,6 +1,8 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { formatDate } from "date-fns";
+import { ko } from "date-fns/locale";
 import OpenAI from "openai";
 
 export const generateEmbedding = async (activity: string) => {
@@ -19,18 +21,12 @@ export const generateEmbedding = async (activity: string) => {
   // Array of embedding
   const embedding = responese.data[0].embedding;
 
-  // Get the current time in Korean time
-  const now = new Date();
-  const GMTNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-  const koreanDiff = 9 * 60 * 60 * 1000;
-  const koreanNow = new Date(GMTNow.getTime() + koreanDiff);
-
   // Insert the data into tables
   const { data, error: INSERT_ACTIVITY_ERROR } = await supabase.from(
     "activities",
   ).insert({
     description: activity,
-    metadata: { date: "2024-08-01" },
+    metadata: { date: formatDate(new Date(), "yyyy-MM-dd", { locale: ko }) },
   }).select("id").single();
 
   if (INSERT_ACTIVITY_ERROR) {
