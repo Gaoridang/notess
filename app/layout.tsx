@@ -24,17 +24,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
+    <html
+      lang="en"
+      className={GeistSans.className}
+      suppressHydrationWarning
+      style={{ height: "100%" }}
+    >
+      <body className="bg-background text-foreground h-full">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-screen flex flex-col items-center">
-            {children}
-          </main>
+          <main className="h-full py-12">{children}</main>
         </ThemeProvider>
       </body>
     </html>
