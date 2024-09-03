@@ -39,16 +39,15 @@ export const search = async (query: string) => {
           You should response based on the following context and question.
           You should not contain any information outside of the context.
           If there's no information in the context, answer "No information available".
-          Today is ${
-          formatDate(new Date(), "yyyy-MM-dd", { locale: ko })
-        }. Reponse in Korean.
+          Today is ${formatDate(new Date(), "yyyy-MM-dd", {
+            locale: ko,
+          })}. Reponse in Korean.
 
-          Context: ${
-          data.map((d: any) =>
-            `Date: ${d.metadata.date} Content: ${d.description}`
-          )
-            .join("\n\n")
-        }
+          Context: ${data
+            .map(
+              (d: any) => `Date: ${d.metadata.date} Content: ${d.description}`,
+            )
+            .join("\n\n")}
 
           Question: ${query}
         `,

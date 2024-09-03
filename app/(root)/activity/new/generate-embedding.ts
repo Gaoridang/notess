@@ -22,12 +22,14 @@ export const generateEmbedding = async (activity: string) => {
   const embedding = responese.data[0].embedding;
 
   // Insert the data into tables
-  const { data, error: INSERT_ACTIVITY_ERROR } = await supabase.from(
-    "activities",
-  ).insert({
-    description: activity,
-    metadata: { date: formatDate(new Date(), "yyyy-MM-dd", { locale: ko }) },
-  }).select("id").single();
+  const { data, error: INSERT_ACTIVITY_ERROR } = await supabase
+    .from("activities")
+    .insert({
+      description: activity,
+      metadata: { date: formatDate(new Date(), "yyyy-MM-dd", { locale: ko }) },
+    })
+    .select("id")
+    .single();
 
   if (INSERT_ACTIVITY_ERROR) {
     return {
@@ -35,12 +37,12 @@ export const generateEmbedding = async (activity: string) => {
     };
   }
 
-  const { error: INSERT_EMBEDDING_ERROR } = await supabase.from(
-    "activity_embeddings",
-  ).insert({
-    embedding,
-    activity_id: data.id,
-  });
+  const { error: INSERT_EMBEDDING_ERROR } = await supabase
+    .from("activity_embeddings")
+    .insert({
+      embedding,
+      activity_id: data.id,
+    });
 
   if (INSERT_EMBEDDING_ERROR) {
     return {

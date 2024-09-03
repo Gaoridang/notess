@@ -2,6 +2,7 @@
 
 메모를 여기저기 하다보면, 언제 어떤 메모를 했는지, 어떤 일을 했는지 잊어버리곤 합니다. <br />
 이 앱은 그 블랙박스를 메워주는 서비스입니다.
+
 ```
 유저: "지난 주말에 갔던 카페가 어디야?"
 AI: "OO 커피 입니다."
@@ -23,16 +24,16 @@ AI: "OO 커피 입니다."
 
 1. Supabase + Next.js 구성
 2. 테이블 생성
-    - activities
-    - activity_embeddings
+   - activities
+   - activity_embeddings
 3. 활동 입력 페이지 제작
-    - 유저 인풋
-    - activities 테이블에 유저 활동 기록 업로드
-    - 임베딩 생성 및 activity_embeddings 테이블에 업로드
+   - 유저 인풋
+   - activities 테이블에 유저 활동 기록 업로드
+   - 임베딩 생성 및 activity_embeddings 테이블에 업로드
 4. 검색 및 답변 페이지 제작
-    - 유저 인풋
-    - PostgreSQL을 활용한 semantic search 함수 제작
-    - 맥락 정보를 바탕으로 답변하는 LLM 세팅
+   - 유저 인풋
+   - PostgreSQL을 활용한 semantic search 함수 제작
+   - 맥락 정보를 바탕으로 답변하는 LLM 세팅
 
 ## 개선점
 
